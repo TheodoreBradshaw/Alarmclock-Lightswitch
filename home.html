@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>Alarmclock Lightswitch - HIP - Theodore</title>
+        <script   src="http://code.jquery.com/jquery-3.1.1.js"   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="   crossorigin="anonymous"></script>
+        <script   src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"   integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="   crossorigin="anonymous"></script>
+        <!-- Pull jQuery & JQuery UI -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+    </head>
+    <body>
+        <!-- Dialogue Box -->
+        <div id="dialog-form" title="Create New Alarm">   <!-- Create New Alarms Button -->
+            <form>
+                <fieldset>
+                    <!-- create form Time -->
+                    <label for="Time">Time in 24:00 hour format</label>
+                    <input type="text" name="Time" id="Time" value="" class="text ui-widget-content ui-corner-all">
+                    <!-- create form Days -->
+                    <label for="Days">Days:S,M,T,W,T,F,S</label>
+                    <input type="text" name="Days" id="Days" value="" class="text ui-widget-content ui-corner-all">
+                
+                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                </fieldset>
+            </form>
+        </div>
+        <div id="users-contain" class="ui-widget">
+            <h1>Existing Alarms:</h1>
+            <table id="users" class="ui-widget ui-widget-content">
+                <thead>
+                    <tr class="ui-widget-header ">
+                        <th>Time</th>
+                        <th>Days</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>06:30</td>
+                        <td>M,T,W,T,F</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    <button id="create-user">Create new Alarm</button>
+    </body>
+</html>
+<script>
+    $( function() 
+    {
+        var dialog, form,
+
+        DaysRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
+        Time = $( "#Time" ),
+        Days = $( "#Days" ),
+        allFields = $( [] ).add( Time ).add( Days ),
+        tips = $( ".validateTips" );
+
+        function updateTips( t ) 
+        {
+        tips
+            .text( t )
+            .addClass( "ui-state-highlight" );
+        setTimeout(function() 
+            {
+                tips.removeClass( "ui-state-highlight", 1500 );
+            }, 500 );
+        }
+
+        function checkLength( o, n, min, max ) 
+        {
+        if ( o.val().length > max || o.val().length < min ) 
+            {
+                o.addClass( "ui-state-error" );
+                updateTips( "Length of " + n + " must be between " +
+                min + " and " + max + "." );
+                return false;
+            } 
+        else
+            {
+                return true;
+            }
+        }
+
+        function checkRegexp( o, regexp, n ) 
+        {
+        if ( !( regexp.test( o.val() ) ) ) 
+            {
+                o.addClass( "ui-state-error" );
+                updateTips( n );
+                return false;
+            }
+        else 
+            {
+                return true;
+            }
+        }
+
+        function addUser() 
+        {
+        var valid = true;
+        allFields.removeClass( "ui-state-error" );
+
+        //valid = valid && checkLength( Time, "Time", 3, 16 );
+        //valid = valid && checkLength( Days, "Days", 6, 80 );
+
+        //valid = valid && checkRegexp( Title, /^[a-z]([0-9_\s])+$/i, "Time may consist of 0-9, underscores, spaces and must begin with a letter." );
+        //valid = valid && checkRegexp( Days, DaysRegex, "eg. ui@jquery.com" );
+
+        if ( valid ) 
+            {
+                $( "#users tbody" ).append( "<tr>" +
+                "<td>" + Time.val() + "</td>" +
+                "<td>" + Days.val() + "</td>" +
+                "</tr>" );
+                dialog.dialog( "close" );
+            }
+        return valid;
+        }
+
+        dialog = $( "#dialog-form" ).dialog(
+            {
+                autoOpen: false,
+                height: 350,
+                width: 350,
+                modal: true,
+                buttons: 
+                    {
+                        "OK": addUser,
+                        Cancel: function() 
+                            {
+                              dialog.dialog( "close" );
+                            }
+                    },
+                close: function() 
+                {
+                    form[ 0 ].reset();
+                    allFields.removeClass( "ui-state-error" );
+                }
+            });
+
+        form = dialog.find( "form" ).on( "submit", function( event ) 
+        {
+            event.preventDefault();
+            addUser();
+        });
+
+        $( "#create-user" ).button().on( "click", function() 
+            {
+                dialog.dialog( "open" );
+            });
+    } );
+</script>
