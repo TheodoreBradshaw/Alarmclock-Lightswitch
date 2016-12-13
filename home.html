@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+..
 
 <head>
     <title>IOT Lightswitch - HIP - Theodore</title>
@@ -12,7 +13,36 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
-<body>
+<body onLoad="sivamtime()" align="center">
+    <table border="0" align="center" cellspacing="0" cellpadding="2" width="136">
+        <tr>
+            <td colspan="4">
+                <h1>Current Time</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form name="hours">
+                    <p><input type="text" size="2" name="clock"></p>
+                </form>
+            </td>
+            <td>
+                <form name="minutes">
+                    <p><input type="text" size="2" name="clock" /></p>
+                </form>
+            </td>
+            <td>
+                <form name="seconds">
+                    <p><input type="text" size="2" name="clock" /></p>
+                </form>
+            </td>
+            <td>
+                <form name="ampm">
+                    <p><input type="text" size="2" name="clock" /></p>
+                </form>
+            </td>
+        </tr>
+    </table>
     <!-- Dialogue Box -->
     <div id="dialog-form" title="Create New Alarm">
         <!-- Create New Alarms Button -->
@@ -20,31 +50,32 @@
             <fieldset>
                 <!-- create form Time -->
                 <label for="Time">Time in 24:00 hour format</label><br>
-                <input type="text" name="Time" id="Time" value="" class="text ui-widget-content ui-corner-all"><br>
+                <input type="time" name="Time" id="Time" value="" class="text ui-widget-content ui-corner-all"><br>
                 <!-- create form Days -->
-                <label><input type="checkbox" id="newAlarm.Sun" value="newAlarm.Sun"> Sunday</label><br>
-                <!--Sunday? Check Box-->
-                <label><input type="checkbox" id="newAlarm.Mon" value="newAlarm.Mon"> Monday</label><br>
-                <!--Monday? Check Box-->
-                <label><input type="checkbox" id="newAlarm.Tue" value="newAlarm.Tue"> Tuesday</label><br>
-                <!--Tuesday? Check Box-->
-                <label><input type="checkbox" id="newAlarm.Wed" value="newAlarm.Wed"> Wednesday</label><br>
-                <!--Wednesday? Check Box-->
-                <label><input type="checkbox" id="newAlarm.Thu" value="newAlarm.Thu"> Thrusday</label><br>
-                <!--Thursday? Check Box-->
-                <label><input type="checkbox" id="newAlarm.Fri" value="newAlarm.Fri"> Friday</label><br>
-                <!--Friday? Check Box-->
-                <label><input type="checkbox" id="newAlarm.Sat" value="newAlarm.Sat"> Saturday</label><br>
-                <!--Sunday? Check Box-->
-
+                <div id="Days">
+                    <label><input type="checkbox" id="newAlarm.Sun" value="Su"> Sunday</label><br>
+                    <!--Sunday? Check Box-->
+                    <label><input type="checkbox" id="newAlarm.Mon" value="Mo"> Monday</label><br>
+                    <!--Monday? Check Box-->
+                    <label><input type="checkbox" id="newAlarm.Tue" value="Tu"> Tuesday</label><br>
+                    <!--Tuesday? Check Box-->
+                    <label><input type="checkbox" id="newAlarm.Wed" value="We"> Wednesday</label><br>
+                    <!--Wednesday? Check Box-->
+                    <label><input type="checkbox" id="newAlarm.Thu" value="Th"> Thrusday</label><br>
+                    <!--Thursday? Check Box-->
+                    <label><input type="checkbox" id="newAlarm.Fri" value="Fr"> Friday</label><br>
+                    <!--Friday? Check Box-->
+                    <label><input type="checkbox" id="newAlarm.Sat" value="Sa"> Saturday</label><br>
+                    <!--Sunday? Check Box-->
+                </div>
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
         </form>
     </div>
     <div id="alarms-contain" class="ui-widget">
-        <h1>Existing Alarms:</h1>
-        <table id="alarms" class="ui-widget ui-widget-content">
+        <h1 align="center">Existing Alarms:</h1>
+        <table id="alarms" class="ui-widget ui-widget-content" align="center">
             <thead>
                 <tr class="ui-widget-header ">
                     <th>Time</th>
@@ -54,16 +85,23 @@
             <tbody>
                 <tr>
                     <td>06:30</td>
-                    <td>M,T,W,T,F</td>
+                    <td>Mo,Tu,We,Th,Fr</td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <button id="create-alarm">Create new Alarm</button>
+    <button id="create-alarm" align="center" class="ui-button ui-corner-all ui-widget">Create new Alarm</button>
 </body>
 
 </html>
 <script>
+
+     $.ajax({
+            type: "GET",
+            url: "10.1.0.24:80",
+            success: function(){console.log("get");}
+            });
+
     $( function createNewAlarm() {
         var dialog
         var form
@@ -71,37 +109,37 @@
         //DaysRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
         Time = $( "#Time" ),
         Days = $( "#Days" ),
-        allFields = $( [] ).add( Time ).add( Days ),
-        //tips = $( ".validateTips" );
+        allFields = $( [] ).add( Time ).add( Days );
+        //tips = $( ".validateTips" );       
 
-        function checkLength( o, n, min, max ) {
-        if ( o.val().length > max || o.val().length < min ) {
-                o.addClass( "ui-state-error" );
-                updateTips( "Length of " + n + " must be between " +  min + " and " + max + "." );
-                return false;} 
-        else{
-                return true;}}
-
-        /*function checkRegexp( o, regexp, n ) {
-        if ( !( regexp.test( o.val() ) ) ) {
-                o.addClass( "ui-state-error" );
-                //updateTips( n );
-                return false;}
-        else {
-                return true;}}*/
-
-        function addUser() {
+        function addAlarm() {
         var valid = true;
         allFields.removeClass( "ui-state-error" );
 
-        //valid = valid && checkLength( Time, "Time", 5 , 5 );  //Bugged Line. Why?
-
         if ( valid ) {
+            var alarmDaysString = "";
+
+                $("#Days").find("input:checked").each(function(index){
+                  alarmDaysString += $(this).val() + ", ";
+                  });
+
+                  alarmDaysString = alarmDaysString.substring(0, alarmDaysString.length - 2);
+
+
                 $( "#alarms tbody" ).append( "<tr>" +
-                "<td>" + Time.val() + "</td>" +
-                "<td>" + Days.val() + "</td>" +
-                "</tr>" );
+                "<td>" + Time.val() + "</td>"
+                + "<td>" + alarmDaysString + "</td>"
+                + "<td>" + "<button class='delButton' type='button' onclick='deleteAlarm(this)'>delete</button>"
+                + "</td>" + "</tr>");
+                console.log(alarmDaysString);
+                $.ajax({
+                    type: "POST",
+                    url: "10.1.0.24:80",
+                    data: Time.val() + " " + alarmDaysString,
+                    success: function(){console.log("success");}
+                });
                 dialog.dialog( "close" );}
+                
         return valid;}
 
         dialog = $( "#dialog-form" ).dialog({
@@ -110,7 +148,7 @@
                 width: 350,
                 modal: true,
                 buttons: {
-                        "OK": addUser,
+                        "OK": addAlarm,
                         Cancel: function() {
                               dialog.dialog( "close" );}},
                         close: function() {
@@ -120,11 +158,52 @@
 
         form = dialog.find( "form" ).on( "submit", function( event ) {
             event.preventDefault();
-            addUser();
+            addAlarm();
         });
 
         $( "#create-alarm" ).button().on( "click", function(){
                 dialog.dialog( "open" );
             });
+       // $( ".delButton" ).click (function(){
+       //     alert("me");
+       // });
     } );
+    function deleteAlarm(delButton) {
+        alert("Are you sure?");
+        $(delButton).closest('tr').remove();
+    }
+    function sivamtime() {
+                now=new Date();
+                hour=now.getHours();
+                min=now.getMinutes();
+                sec=now.getSeconds();
+
+            if (min<=9) {
+                min="0"+min;
+            }
+            if (sec<=9) {
+                sec="0"+sec;
+            }
+            if (hour>12) {
+                hour=hour-12;
+                add="pm";
+            }
+            else {
+                hour=hour;
+                add="am";
+            }
+            if (hour==12) {
+                add="pm";
+            }
+            if (hour==00) {
+                hour="12";
+            }
+
+            document.hours.clock.value = (hour<=9) ? "0"+hour : hour;
+            document.minutes.clock.value = min;
+            document.seconds.clock.value = sec;
+            document.ampm.clock.value= add;
+            setTimeout("sivamtime()", 1000);
+
+            }
 </script>
