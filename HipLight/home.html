@@ -54,13 +54,13 @@
             <input type="time" name="Time" id="Time" value="" class="text ui-widget-content ui-corner-all"><br>
             <!-- create form Days -->
             <div id="Days">
-                <label><input type="checkbox" id="newAlarm.Sun" value="Su"> Sunday</label><br>
-                <label><input type="checkbox" id="newAlarm.Mon" value="Mo"> Monday</label><br>
-                <label><input type="checkbox" id="newAlarm.Tue" value="Tu"> Tuesday</label><br>
-                <label><input type="checkbox" id="newAlarm.Wed" value="We"> Wednesday</label><br>
-                <label><input type="checkbox" id="newAlarm.Thu" value="Th"> Thrusday</label><br>
-                <label><input type="checkbox" id="newAlarm.Fri" value="Fr"> Friday</label><br>
-                <label><input type="checkbox" id="newAlarm.Sat" value="Sa"> Saturday</label><br>
+                <label><input type="checkbox" id="Sun" value="0"> Sunday</label><br>
+                <label><input type="checkbox" id="Mon" value="1"> Monday</label><br>
+                <label><input type="checkbox" id="Tue" value="2"> Tuesday</label><br>
+                <label><input type="checkbox" id="Wed" value="3"> Wednesday</label><br>
+                <label><input type="checkbox" id="Thu" value="4"> Thrusday</label><br>
+                <label><input type="checkbox" id="Fri" value="5"> Friday</label><br>
+                <label><input type="checkbox" id="Sat" value="6"> Saturday</label><br>
             </div>
             <!-- Allow form submission with keyboard without duplicating the dialog button -->
             <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -86,18 +86,27 @@
 </html>
 
 <script>
-    var hostURL = "192.168.0.159:80"
+    var hostURL = "10.1.0.24:80"
     /*
         $(function ajaxGet() {
             ajax({ type: "GET", url: hostURL, success: function () { console.log("get"); } });
         })
     */
+    var ajaxTestData = "TestData"
 
+    /*$.ajax({
+        type: "POST",
+        url: hostURL,
+        data: ajaxTestData,
+        success: function () { console.log("Successfully posted TestData to SERVER"); },
+        error: function (errorThrown) { console.log("Error : Failed to post TestData to SERVER : " + errorThrown); }
+    });
+*/
     $(function createNewAlarm() {
         var dialog
         var form
 
-        Time = $("#Time"),
+        var Time = $("#Time"),
             Days = $("#Days"),
             allFields = $([]).add(Time).add(Days);
 
@@ -108,26 +117,43 @@
 
             if (true) {
                 var alarmDaysString = "";
+                var dayintvalue = [];
+                var times = Time.val().split(":");
 
                 $("#Days").find("input:checked").each(function (index) {
-                    alarmDaysString += $(this).val() + ", ";
+                    alarmDaysString += $(this).attr("id") + ", ";
+                    dayintvalue.push($(this).val())
                 });
 
                 alarmDaysString = alarmDaysString.substring(0, alarmDaysString.length - 2);
+                var alarm = {
+                    days: dayintvalue,
+                    hour: times[0],
+                    minute: times[1]
+                };
 
-                $("#alarms tbody").append("<tr>" +
-                    "<td>" + Time.val() + "</td>"
+                $("#alarms tbody").append("<tr>"
+                    + "<td>" + Time.val() + "</td>"
                     + "<td>" + alarmDaysString + "</td>"
                     + "<td>" + "<button class='delButton' type='button' onclick='deleteAlarm(this)'>delete</button>"
                     + "</td>" + "</tr>");
+                $("#alarms tbody tr:last").data("alarmData", alarm);
                 console.log(alarmDaysString);
+                console.log(Time.val());
+                console.log(dayintvalue);
+                console.log(times[0]);
+                console.log(times[1]);
+
+
 
                 //  /*
                 $.ajax({
                     type: "POST",
-                    url: hostURL,
-                    data: Time.val() + " " + alarmDaysString,
-                    success: function () { console.log("Successfully Posted Alarm : " + Time.val("") + " " + alarmDaysString); }
+                    url: "/app.js",
+                    dataType: "json",
+                    data: JSON.stringify(alarm),
+                    success: function () { console.log("Successfully posted new alarm : " + Time.val("") + " " + alarmDaysString); },
+                    error: function (errorThrown) { console.log("Error : Failed to post new alarm to server : " + errorThrown.StackTrace + " " + errorThrown.ExceptionType); }
                 });
                 //  */
                 dialog.dialog("close");
@@ -176,9 +202,17 @@
 
     //delete alarm from table and index
     function deleteAlarm(delButton) {
-        alert("Are you sure?");
-        $(delButton).closest('tr').remove();
+        alert("You are deleting an alarm!");
         //////TELL SERVER TO DELETE ALARM FROM INDEX//////
+        $.ajax({
+            type: "DELETE",
+            url: "/app.js",
+            dataType: "json",
+            data: $(delButton).closest('tr').data("alarmData"),
+            success: function () { console.log("Successfully deleted Alarm"); },
+            //error: function (errorThrown) { console.log("Error : Failed to post new alarm to server : " + errorThrown.StackTrace + " " + errorThrown.ExceptionType); }
+        })
+        $(delButton).closest('tr').remove();
     }
 
     //clock script
