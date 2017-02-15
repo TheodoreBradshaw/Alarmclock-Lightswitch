@@ -1,3 +1,0 @@
-Hostname:	LightPi
-Username:	pi
-Password:	raspberry
