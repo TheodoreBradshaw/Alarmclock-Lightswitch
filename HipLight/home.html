@@ -86,17 +86,17 @@
 </html>
 
 <script>
-    var hostURL = "10.1.0.24:80"
+    var hostIP = "10.1.0.24:80"
     /*
         $(function ajaxGet() {
-            ajax({ type: "GET", url: hostURL, success: function () { console.log("get"); } });
+            ajax({ type: "GET", url: hostIP, success: function () { console.log("get"); } });
         })
     */
     var ajaxTestData = "TestData"
 
     /*$.ajax({
         type: "POST",
-        url: hostURL,
+        url: hostIP,
         data: ajaxTestData,
         success: function () { console.log("Successfully posted TestData to SERVER"); },
         error: function (errorThrown) { console.log("Error : Failed to post TestData to SERVER : " + errorThrown); }
@@ -149,10 +149,9 @@
                 //  /*
                 $.ajax({
                     type: "POST",
-                    url: "/app.js",
-                    dataType: "json",
+                    url: "/app.js/add",
                     data: JSON.stringify(alarm),
-                    success: function () { console.log("Successfully posted new alarm : " + Time.val("") + " " + alarmDaysString); },
+                    success: function () { console.log("Successfully posted new alarm : " + Time.val() + " " + alarmDaysString); },
                     error: function (errorThrown) { console.log("Error : Failed to post new alarm to server : " + errorThrown.StackTrace + " " + errorThrown.ExceptionType); }
                 });
                 //  */
@@ -205,12 +204,11 @@
         alert("You are deleting an alarm!");
         //////TELL SERVER TO DELETE ALARM FROM INDEX//////
         $.ajax({
-            type: "DELETE",
-            url: "/app.js",
-            dataType: "json",
-            data: $(delButton).closest('tr').data("alarmData"),
+            type: "POST",
+            url: "/app.js/delete",
+            data: JSON.stringify($(delButton).closest('tr').data("alarmData")),
             success: function () { console.log("Successfully deleted Alarm"); },
-            //error: function (errorThrown) { console.log("Error : Failed to post new alarm to server : " + errorThrown.StackTrace + " " + errorThrown.ExceptionType); }
+            error: function (errorThrown) { console.log("Error : Failed to delete alarm : " + errorThrown.StackTrace + " " + errorThrown.ExceptionType); }
         })
         $(delButton).closest('tr').remove();
     }

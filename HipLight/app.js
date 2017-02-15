@@ -7,50 +7,53 @@ var exec = require('child_process').exec;
 // var $ = require('jQuery');
 var alarms = [];
 
+//////*hostIP*//////
+var hostIP = "10.1.0.24";
 
-//////*hostURL*//////
-var hostURL = "10.1.0.24"
-//////CreateServer at hostURL with home.html
+//////CreateServer at hostIP with home.html
 http.createServer(function (req, res) {
-    fs.readFile('./home.html', function (err, data) {
-        if (err) { throw err; }
-        htmlFile = data;
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.write(htmlFile)
-        res.end();
-    });
-
-    //  /*
-
     var body = '';
-    console.log("POST recieved");
+   
     req.on('data', function (data) {
         body += data;
     });
 
     req.on('end', function () {
-        //var post = qs.parse(body);
-        //console.log(JSON.parse(body));
-        //setNewAlarm(JSON.parse(body));
-
+        if(req.method === 'GET') {
+            fs.readFile('./home.html', function (err, data) {
+            if (err) { throw err; }
+            htmlFile = data;
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.write(htmlFile)
+            res.end();
+            });
+        }
         if (req.method === 'POST') {
             //post alarm
             var post = qs.parse(body);
             console.log(JSON.parse(body));
-            setNewAlarm(JSON.parse(body));
-
-        }
-        if (req.method === 'DELETE') {
-            //delete alarm
-            deleteAlarm(/*AlarmID*/)
+            var URL = req.url;
+            console.log(URL);
+            if(URL == "/app.js/add"){
+                if(!setNewAlarm(JSON.parse(body))){
+                    res.statusCode = 500;
+                }
+            }
+            if(URL == "/app.js/delete"){
+                if(!deleteAlarm(JSON.parse(body))){
+                    res.statusCode = 500;
+                }
+            }
+            console.log("POST recieved"); 
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end();
         }
         //console.log(JSON.stringify(body, null, 2));
         // use post['blah'], etc.
     });
 
     /*
-    //post to alarmIndex
-
+    //////post to alarmIndex//////
     var string = body + " \r\n";
     fs.open('alarmIndex.txt', 'a');
     fs.appendFile('alarmIndex.txt', string, function (err) {
@@ -59,21 +62,27 @@ http.createServer(function (req, res) {
         console.log("successfully appended new alarm to Alarm Index" + string);   
     });
     */
+}).listen(80, hostIP);
+console.log('Server running at http://' + hostIP + ':80/');
 
-}).listen(80, hostURL);
-
-console.log('Server running at http://' + hostURL + ':80/');
 
 function setNewAlarm(alarm) {
+    if(alarm == null){
+        console.log("invalid alarm")
+        return false;
+    }
     for (i = 0; i < alarms.length; i++) {
         if (alarmsMatch(alarm, alarm[i])) {
             console.log("2 Identicle Alarms Found!")
-            return;
+            return false;
         }
     }
     var alarmJob = schedule.scheduleJob('0 '/*seconds*/ + alarm.minute + ' ' + alarm.hour + ' * * '/*Month*/ + alarm.days.join(',')/*Days of the week*/, handleAlarm);     //schedule alarm
     alarm.alarmJob = alarmJob;
+    console.log("pushing alarm: " + JSON.stringify(alarm));
     alarms.push(alarm);
+    console.log("scheduled new alarm");
+    return true;
 }
 
 function handleAlarm() {
@@ -90,6 +99,14 @@ function alarmsMatch(alarm1, alarm2) {
     return false;
 }
 
-function deleteAlarm(/*AlarmID*/){
+function deleteAlarm(alarm) {
+    for (i = 0; i < alarms.length; i++) {
+        if (alarmsMatch(alarm, alarms[i])) {
+            alarms[i].alarmJob.cancel();
+            console.log("Alarm deleted" + JSON.stingify(alarm));
+            return true;
+        }
+    }
+    return false;
     /* You can invalidate the job with the cancel() method: */
 }
