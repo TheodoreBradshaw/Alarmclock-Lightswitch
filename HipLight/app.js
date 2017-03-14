@@ -4,47 +4,59 @@ var htmlFile = "";
 var qs = require('querystring');
 var schedule = require('node-schedule');
 var exec = require('child_process').exec;
-// var $ = require('jQuery');
+var readline = require('readline');
 var alarms = [];
 
 //////*hostIP*//////
 var hostIP = "10.1.0.24";
 
+loadAlarms();
+
 //////CreateServer at hostIP with home.html
 http.createServer(function (req, res) {
     var body = '';
-   
+
     req.on('data', function (data) {
         body += data;
     });
 
     req.on('end', function () {
-        if(req.method === 'GET') {
-            fs.readFile('./home.html', function (err, data) {
-            if (err) { throw err; }
-            htmlFile = data;
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.write(htmlFile)
-            res.end();
-            });
+        var URL = req.url;
+        if (req.method === 'GET') {
+            if (URL == "/app.js/pull") {
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.write(JSON.stringify(alarms))
+                res.end();
+            } else {
+                fs.readFile('./home.html', function (err, data) {
+                    if (err) { throw err; }
+                    htmlFile = data;
+                    res.writeHead(200, { 'Content-Type': 'text/html' });
+                    res.write(htmlFile)
+                    res.end();
+                })
+            }
         }
         if (req.method === 'POST') {
             //post alarm
             var post = qs.parse(body);
             console.log(JSON.parse(body));
-            var URL = req.url;
-            console.log(URL);
-            if(URL == "/app.js/add"){
-                if(!setNewAlarm(JSON.parse(body))){
+            // console.log(URL);
+
+            if (URL == "/app.js/add") {
+                if (!setNewAlarm(JSON.parse(body))) {
+                    res.statusCode = 500;
+                } else {
+                    indexAlarm(JSON.parse(body));
+                }
+            }
+
+            if (URL == "/app.js/delete") {
+                if (!deleteAlarm(JSON.parse(body))) {
                     res.statusCode = 500;
                 }
             }
-            if(URL == "/app.js/delete"){
-                if(!deleteAlarm(JSON.parse(body))){
-                    res.statusCode = 500;
-                }
-            }
-            console.log("POST recieved"); 
+            console.log("POST recieved");
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end();
         }
@@ -52,27 +64,49 @@ http.createServer(function (req, res) {
         // use post['blah'], etc.
     });
 
-    /*
     //////post to alarmIndex//////
-    var string = body + " \r\n";
-    fs.open('alarmIndex.txt', 'a');
-    fs.appendFile('alarmIndex.txt', string, function (err) {
-        if (err)
-            return console.log(err + "error appending new alarm to alarmIndex");
-        console.log("successfully appended new alarm to Alarm Index" + string);   
-    });
-    */
+
+
 }).listen(80, hostIP);
 console.log('Server running at http://' + hostIP + ':80/');
 
+function loadAlarms() {
+    if (!fs.existsSync('alarmIndex.txt')) {
+        return;
+    }
+    var readerInterface = readline.createInterface({
+        input: fs.createReadStream('alarmIndex.txt')
+    });
+    readerInterface.on('line', function (line) {
+        console.log('Line from file:', line);
+        var stored = JSON.parse(line)
+        setNewAlarm(stored)
+    });
+}
+
+function indexAlarm(alarm) {
+    var string = JSON.stringify(alarm) + "\r\n";
+    //var string = "hello world \r\n";
+    //fs.open('alarmIndex.txt', 'a', function (err, fd) {"
+    var fd = 'alarmIndex.txt'
+    if (string.length > 3) {
+        fs.appendFile(fd, string, function (err) {
+            if (err)
+                return console.log(err + "error appending new alarm to alarmIndex");
+            console.log("successfully appended new alarm to Alarm Index" + string);
+        });
+    }
+    // });
+    //fs.close(fd, function () { })
+}
 
 function setNewAlarm(alarm) {
-    if(alarm == null){
+    if (alarm == null || alarm == undefined) {
         console.log("invalid alarm")
         return false;
     }
-    for (i = 0; i < alarms.length; i++) {
-        if (alarmsMatch(alarm, alarm[i])) {
+    for (var i = 0; i < alarms.length; i++) {
+        if (matchingAlarms(alarm, alarms[i])) {
             console.log("2 Identicle Alarms Found!")
             return false;
         }
@@ -91,7 +125,7 @@ function handleAlarm() {
     exec("sudo ./lightOn.out");
 }
 
-function alarmsMatch(alarm1, alarm2) {
+function matchingAlarms(alarm1, alarm2) {
     //if alarm1 === alarm2 -> delete alarm
     if (alarm1.minute == alarm2.minute && alarm1.hour == alarm2.hour && JSON.stringify(alarm1.days) == JSON.stringify(alarm2.days)) {
         return true;
@@ -100,10 +134,28 @@ function alarmsMatch(alarm1, alarm2) {
 }
 
 function deleteAlarm(alarm) {
-    for (i = 0; i < alarms.length; i++) {
-        if (alarmsMatch(alarm, alarms[i])) {
+    for (var i = 0; i < alarms.length; i++) {
+        if (matchingAlarms(alarm, alarms[i])) {
             alarms[i].alarmJob.cancel();
-            console.log("Alarm deleted" + JSON.stingify(alarm));
+            alarms.splice(i, 1);
+
+            var readerInterface = readline.createInterface({
+                input: fs.createReadStream('alarmIndex.txt')
+            });
+            readerInterface.on('line', function (line) {
+                console.log('Line from file:', line);
+                var stored = JSON.parse(line)
+                if (matchingAlarms(stored, alarm)) {
+                    //delete from alarmIndex.txt
+                    fs.unlink('alarmIndex.txt', function () { })
+
+                    for(var a= 0; a < alarms.length; a++){
+                        indexAlarm(alarms[a]);
+                    }
+                }
+            });
+
+            console.log("Alarm deleted" + JSON.stringify(alarm));
             return true;
         }
     }

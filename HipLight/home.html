@@ -7,103 +7,147 @@
     <script src="http://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous"></script>
-    <!-- Pull jQuery & JQuery UI -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <!-- Pull jQuery & JQuery UI -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 </head>
 
 <body onLoad="sivamtime()" align="center">
-<!-- Current Time Table -->
-<table border="0" align="center" cellspacing="0" cellpadding="2" width="136">
-    <tr>
-        <td colspan="4">
-            <h1>Current Time</h1>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <form name="hours">
-                <p><input type="text" size="2" name="clock"></p>
-            </form>
-        </td>
-        <td>
-            <form name="minutes">
-                <p><input type="text" size="2" name="clock" /></p>
-            </form>
-        </td>
-        <td>
-            <form name="seconds">
-                <p><input type="text" size="2" name="clock" /></p>
-            </form>
-        </td>
-        <td>
-            <form name="ampm">
-                <p><input type="text" size="2" name="clock" /></p>
-            </form>
-        </td>
-    </tr>
-</table>
-<!-- New Alarm Dialogue Box -->
-<div id="dialog-form" title="Create New Alarm">
-    <!-- Create New Alarms Button -->
-    <form>
-        <fieldset>
-            <!-- create form Time -->
-            <label for="Time">Time in 24:00 hour format</label><br>
-            <input type="time" name="Time" id="Time" value="" class="text ui-widget-content ui-corner-all"><br>
-            <!-- create form Days -->
-            <div id="Days">
-                <label><input type="checkbox" id="Sun" value="0"> Sunday</label><br>
-                <label><input type="checkbox" id="Mon" value="1"> Monday</label><br>
-                <label><input type="checkbox" id="Tue" value="2"> Tuesday</label><br>
-                <label><input type="checkbox" id="Wed" value="3"> Wednesday</label><br>
-                <label><input type="checkbox" id="Thu" value="4"> Thrusday</label><br>
-                <label><input type="checkbox" id="Fri" value="5"> Friday</label><br>
-                <label><input type="checkbox" id="Sat" value="6"> Saturday</label><br>
-            </div>
-            <!-- Allow form submission with keyboard without duplicating the dialog button -->
-            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-</fieldset>
-</form>
-</div>
-<div id="alarms-contain" class="ui-widget">
-    <h1 align="center">Existing Alarms:</h1>
-    <table id="alarms" class="ui-widget ui-widget-content" align="center">
-        <thead>
-            <tr class="ui-widget-header ">
-                <th>Time</th>
-                <th>Days</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
+    <!-- Current Time Table -->
+    <table border="0" align="center" cellspacing="0" cellpadding="2" width="136">
+        <tr>
+            <td colspan="4">
+                <h1>Current Time</h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <form name="hours">
+                    <p><input type="text" size="2" name="clock"></p>
+                </form>
+            </td>
+            <td>
+                <form name="minutes">
+                    <p><input type="text" size="2" name="clock" /></p>
+                </form>
+            </td>
+            <td>
+                <form name="seconds">
+                    <p><input type="text" size="2" name="clock" /></p>
+                </form>
+            </td>
+            <td>
+                <form name="ampm">
+                    <p><input type="text" size="2" name="clock" /></p>
+                </form>
+            </td>
+        </tr>
     </table>
-</div>
-<button id="create-alarm" align="center" class="ui-button ui-corner-all ui-widget">Create new Alarm</button>
+    <!-- New Alarm Dialogue Box -->
+    <div id="dialog-form" title="Create New Alarm">
+        <!-- Create New Alarms Button -->
+        <form>
+            <fieldset>
+                <!-- create form Time -->
+                <label for="Time">Time in 24:00 hour format</label><br>
+                <input type="time" name="Time" id="Time" value="" class="text ui-widget-content ui-corner-all"><br>
+                <!-- create form Days -->
+                <div id="Days">
+                    <label><input type="checkbox" id="Sun" value="0"> Sunday</label><br>
+                    <label><input type="checkbox" id="Mon" value="1"> Monday</label><br>
+                    <label><input type="checkbox" id="Tue" value="2"> Tuesday</label><br>
+                    <label><input type="checkbox" id="Wed" value="3"> Wednesday</label><br>
+                    <label><input type="checkbox" id="Thu" value="4"> Thrusday</label><br>
+                    <label><input type="checkbox" id="Fri" value="5"> Friday</label><br>
+                    <label><input type="checkbox" id="Sat" value="6"> Saturday</label><br>
+                </div>
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+    <div id="alarms-contain" class="ui-widget">
+        <h1 align="center">Existing Alarms:</h1>
+        <table id="alarms" class="ui-widget ui-widget-content" align="center">
+            <thead>
+                <tr class="ui-widget-header ">
+                    <th>Time</th>
+                    <th>Days</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <button id="create-alarm" align="center" class="ui-button ui-corner-all ui-widget">Create new Alarm</button>
 </body>
 
 </html>
 
 <script>
-    var hostIP = "10.1.0.24:80"
-    /*
-        $(function ajaxGet() {
-            ajax({ type: "GET", url: hostIP, success: function () { console.log("get"); } });
-        })
-    */
-    var ajaxTestData = "TestData"
+    var hostIP = "10.1.0.24:80";
 
-    /*$.ajax({
-        type: "POST",
-        url: hostIP,
-        data: ajaxTestData,
-        success: function () { console.log("Successfully posted TestData to SERVER"); },
-        error: function (errorThrown) { console.log("Error : Failed to post TestData to SERVER : " + errorThrown); }
+    $(document).ready(function () {
+        // Handler for .ready() called.
+        $.ajax({
+            type: "GET",
+            url: "/app.js/pull",
+            success: function (data) {
+                var alarmsArray = data;
+                displayAlarms(alarmsArray);
+            },
+            error: function (errorThrown) { console.log("Error : " + errorThrown.StackTrace + " " + errorThrown.ExceptionType); }
+        });
     });
-*/
+
+    function displayAlarms(alarmsArray) {
+        // console.log(alarmsArray)
+        for (var i = 0; i < alarmsArray.length; i++) {
+            var alarm = alarmsArray[i];
+            var days = alarm.days;
+            var dayStrings = [];
+
+            for (var x = 0; x < days.length; x++) {
+                switch (days[x]) {
+                    case "0":
+                        dayStrings.push("Sun");
+                        break;
+                    case "1":
+                        dayStrings.push("Mon");
+                        break;
+                    case "2":
+                        dayStrings.push("Tue");
+                        break;
+                    case "3":
+                        dayStrings.push("Wed");
+                        break;
+                    case "4":
+                        dayStrings.push("Thu");
+                        break;
+                    case "5":
+                        dayStrings.push("Fri");
+                        break;
+                    case "6":
+                        dayStrings.push("Sat");
+                        break;
+                    default:
+                        console.log("Unknows day value");
+                        break;
+
+                }
+            }
+            $("#alarms tbody").append("<tr>"
+                + "<td>" + alarm.hour + ":" + alarm.minute + "</td>"
+                + "<td>" + dayStrings.join(", ") + "</td>"
+                + "<td>" + "<button class='delButton' type='button' onclick='deleteAlarm(this)'>delete</button>"
+                + "</td>" + "</tr>");
+            $("#alarms tbody tr:last").data("alarmData", alarm);
+        }
+    }
+
     $(function createNewAlarm() {
-        var dialog
+        var dialog;
         var form
 
         var Time = $("#Time"),
@@ -138,11 +182,11 @@
                     + "<td>" + "<button class='delButton' type='button' onclick='deleteAlarm(this)'>delete</button>"
                     + "</td>" + "</tr>");
                 $("#alarms tbody tr:last").data("alarmData", alarm);
-                console.log(alarmDaysString);
-                console.log(Time.val());
-                console.log(dayintvalue);
-                console.log(times[0]);
-                console.log(times[1]);
+                // console.log(alarmDaysString);
+                // console.log(Time.val());
+                // console.log(dayintvalue);
+                // console.log(times[0]);
+                // console.log(times[1]);
 
 
 
@@ -248,4 +292,5 @@
         setTimeout("sivamtime()", 1000);
 
     }
+
 </script>
