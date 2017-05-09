@@ -94,3 +94,159 @@ successfully appended new alarm to Alarm Index{"days":["2","5"],"hour":"01","min
 Alarm deleted{"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
 POST recieved
 Line from file: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+{ days: [ '1', '2', '3', '4', '5' ], hour: '06', minute: '45' }
+pushing alarm: {"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["1","2","3","4","5"],"hour":"06","minute":"45"}
+
+{ days: [], hour: '01', minute: '09' }
+pushing alarm: {"days":[],"hour":"01","minute":"09","alarmJob":{"callback":false,"name":"<Anonymous Job 4>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":[],"hour":"01","minute":"09"}
+
+{ days: [], hour: '01', minute: '09' }
+Alarm deleted{"days":[],"hour":"01","minute":"09"}
+POST recieved
+Line from file: {"days":["1","2","3","4","5"],"hour":"06","minute":"45"}
+Line from file: {"days":[],"hour":"01","minute":"09"}
+successfully appended new alarm to Alarm Index{"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+
+Server running at http://192.168.1.77:80/
+Line from file: {"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+pushing alarm: {"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+scheduled new alarm
+{ days: [ '4' ], hour: '18', minute: '12' }
+pushing alarm: {"days":["4"],"hour":"18","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["4"],"hour":"18","minute":"12"}
+
+{ days: [], hour: '00', minute: '12' }
+pushing alarm: {"days":[],"hour":"00","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"12"}
+
+{ days: [ '2' ], hour: '12', minute: '12' }
+pushing alarm: {"days":["2"],"hour":"12","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 4>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["2"],"hour":"12","minute":"12"}
+
+{ days: [ '3' ], hour: '' }
+pushing alarm: {"days":["3"],"hour":"","alarmJob":null}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":""}
+
+{ days: [], hour: '00', minute: '02' }
+pushing alarm: {"days":[],"hour":"00","minute":"02","alarmJob":{"callback":false,"name":"<Anonymous Job 6>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"02"}
+
+{ days: [], hour: '00', minute: '00' }
+pushing alarm: {"days":[],"hour":"00","minute":"00","alarmJob":{"callback":false,"name":"<Anonymous Job 7>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"00"}
+
+{ days: [ '3' ], hour: '12', minute: '47' }
+pushing alarm: {"days":["3"],"hour":"12","minute":"47","alarmJob":{"callback":false,"name":"<Anonymous Job 8>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":"12","minute":"47"}
+
+{ days: [ '1' ], hour: '12', minute: '45' }
+pushing alarm: {"days":["1"],"hour":"12","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 9>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["1"],"hour":"12","minute":"45"}
+
+{ days: [ '4' ],
+  hour: '18',
+  minute: '12',
+  alarmJob: { callback: false, name: '<Anonymous Job 2>' } }
+Alarm deleted{"days":["4"],"hour":"18","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+POST recieved
+Line from file: {"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+Line from file: {"days":["4"],"hour":"18","minute":"12"}
+Line from file: {"days":[],"hour":"00","minute":"12"}
+Line from file: {"days":["2"],"hour":"12","minute":"12"}
+Line from file: {"days":["3"],"hour":""}
+Line from file: {"days":[],"hour":"00","minute":"02"}
+Line from file: {"days":[],"hour":"00","minute":"00"}
+Line from file: {"days":["3"],"hour":"12","minute":"47"}
+Line from file: {"days":["1"],"hour":"12","minute":"45"}
+successfully appended new alarm to Alarm Index{"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+
+successfully appended new alarm to Alarm Index{"days":["2"],"hour":"12","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 4>"}}
+
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":"","alarmJob":null}
+
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"02","alarmJob":{"callback":false,"name":"<Anonymous Job 6>"}}
+
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"00","alarmJob":{"callback":false,"name":"<Anonymous Job 7>"}}
+
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":"12","minute":"47","alarmJob":{"callback":false,"name":"<Anonymous Job 8>"}}
+
+successfully appended new alarm to Alarm Index{"days":["1"],"hour":"12","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 9>"}}
+
+{ days: [],
+  hour: '00',
+  minute: '12',
+  alarmJob: { callback: false, name: '<Anonymous Job 3>' } }
+Alarm deleted{"days":[],"hour":"00","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+POST recieved
+Line from file: {"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+Line from file: {"days":[],"hour":"00","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 3>"}}
+Line from file: {"days":["2"],"hour":"12","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 4>"}}
+Line from file: {"days":["3"],"hour":"","alarmJob":null}
+Line from file: {"days":[],"hour":"00","minute":"02","alarmJob":{"callback":false,"name":"<Anonymous Job 6>"}}
+Line from file: {"days":[],"hour":"00","minute":"00","alarmJob":{"callback":false,"name":"<Anonymous Job 7>"}}
+Line from file: {"days":["3"],"hour":"12","minute":"47","alarmJob":{"callback":false,"name":"<Anonymous Job 8>"}}
+Line from file: {"days":["1"],"hour":"12","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 9>"}}
+successfully appended new alarm to Alarm Index{"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+
+successfully appended new alarm to Alarm Index{"days":["2"],"hour":"12","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 4>"}}
+
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":"","alarmJob":null}
+
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"02","alarmJob":{"callback":false,"name":"<Anonymous Job 6>"}}
+
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"00","alarmJob":{"callback":false,"name":"<Anonymous Job 7>"}}
+
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":"12","minute":"47","alarmJob":{"callback":false,"name":"<Anonymous Job 8>"}}
+
+successfully appended new alarm to Alarm Index{"days":["1"],"hour":"12","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 9>"}}
+
+{ days: [ '2' ],
+  hour: '12',
+  minute: '12',
+  alarmJob: { callback: false, name: '<Anonymous Job 4>' } }
+Alarm deleted{"days":["2"],"hour":"12","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 4>"}}
+POST recieved
+Line from file: {"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+Line from file: {"days":["2"],"hour":"12","minute":"12","alarmJob":{"callback":false,"name":"<Anonymous Job 4>"}}
+Line from file: {"days":["3"],"hour":"","alarmJob":null}
+Line from file: {"days":[],"hour":"00","minute":"02","alarmJob":{"callback":false,"name":"<Anonymous Job 6>"}}
+Line from file: {"days":[],"hour":"00","minute":"00","alarmJob":{"callback":false,"name":"<Anonymous Job 7>"}}
+Line from file: {"days":["3"],"hour":"12","minute":"47","alarmJob":{"callback":false,"name":"<Anonymous Job 8>"}}
+Line from file: {"days":["1"],"hour":"12","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 9>"}}
+successfully appended new alarm to Alarm Index{"days":["1","2","3","4","5"],"hour":"06","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":"","alarmJob":null}
+
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"02","alarmJob":{"callback":false,"name":"<Anonymous Job 6>"}}
+
+successfully appended new alarm to Alarm Index{"days":[],"hour":"00","minute":"00","alarmJob":{"callback":false,"name":"<Anonymous Job 7>"}}
+
+successfully appended new alarm to Alarm Index{"days":["3"],"hour":"12","minute":"47","alarmJob":{"callback":false,"name":"<Anonymous Job 8>"}}
+
+successfully appended new alarm to Alarm Index{"days":["1"],"hour":"12","minute":"45","alarmJob":{"callback":false,"name":"<Anonymous Job 9>"}}
+
+{ days: [ '3' ], hour: '', alarmJob: null }

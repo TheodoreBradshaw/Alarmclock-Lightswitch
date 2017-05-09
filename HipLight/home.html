@@ -4,6 +4,7 @@
 
 <head>
     <title>IOT Lightswitch - HIP - Theodore</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="http://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
     <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
         crossorigin="anonymous"></script>
@@ -15,7 +16,7 @@
 
 <body onLoad="sivamtime()" align="center">
     <!-- Current Time Table -->
-    <table border="0" align="center" cellspacing="0" cellpadding="2" width="136">
+    <table class="table-condensed" align="center">
         <tr>
             <td colspan="4">
                 <h1>Current Time</h1>
@@ -24,22 +25,22 @@
         <tr>
             <td>
                 <form name="hours">
-                    <p><input type="text" size="2" name="clock"></p>
+                    <p><input type="text" size="2" name="clock" disabled border="0"></p>
                 </form>
             </td>
             <td>
                 <form name="minutes">
-                    <p><input type="text" size="2" name="clock" /></p>
+                    <p><input type="text" size="2" name="clock" disabled/></p>
                 </form>
             </td>
             <td>
                 <form name="seconds">
-                    <p><input type="text" size="2" name="clock" /></p>
+                    <p><input type="text" size="2" name="clock" disabled/></p>
                 </form>
             </td>
             <td>
                 <form name="ampm">
-                    <p><input type="text" size="2" name="clock" /></p>
+                    <p><input type="text" size="2" name="clock" disabled/></p>
                 </form>
             </td>
         </tr>
@@ -50,7 +51,6 @@
         <form>
             <fieldset>
                 <!-- create form Time -->
-                <label for="Time">Time in 24:00 hour format</label><br>
                 <input type="time" name="Time" id="Time" value="" class="text ui-widget-content ui-corner-all"><br>
                 <!-- create form Days -->
                 <div id="Days">
@@ -69,11 +69,12 @@
     </div>
     <div id="alarms-contain" class="ui-widget">
         <h1 align="center">Existing Alarms:</h1>
-        <table id="alarms" class="ui-widget ui-widget-content" align="center">
+        <table id="alarms" class="table-condensed" align="center">
             <thead>
                 <tr class="ui-widget-header ">
-                    <th>Time</th>
-                    <th>Days</th>
+                    <th align="center">Time</th>
+                    <th align="center">Days</th>
+                    <th> </th>
                 </tr>
             </thead>
             <tbody>
@@ -86,7 +87,7 @@
 </html>
 
 <script>
-    var hostIP = "192.168.1.176:80";
+    var hostIP = "192.168.1.77:80";
 
     $(document).ready(function () {
         // Handler for .ready() called.
@@ -162,7 +163,9 @@
             if (true) {
                 var alarmDaysString = "";
                 var dayintvalue = [];
+                //console.log(Time.val());
                 var times = Time.val().split(":");
+                //console.log(times)
 
                 $("#Days").find("input:checked").each(function (index) {
                     alarmDaysString += $(this).attr("id") + ", ";
@@ -170,6 +173,15 @@
                 });
 
                 alarmDaysString = alarmDaysString.substring(0, alarmDaysString.length - 2);
+                // input validation
+                if (dayintvalue.length < 1 ) {
+                    alert("Invlaid days");
+                    return;
+                }
+                if (times.length < 2) {
+                    alert("Invlaid hour and/or minute");
+                    return;
+                }
                 var alarm = {
                     days: dayintvalue,
                     hour: times[0],
@@ -195,7 +207,7 @@
                     type: "POST",
                     url: "/app.js/add",
                     data: JSON.stringify(alarm),
-                    success: function () { console.log("Successfully posted new alarm : " + Time.val() + " " + alarmDaysString); },
+                    success: function () { console.log("Successfully posted new alarm "); },
                     error: function (errorThrown) { console.log("Error : Failed to post new alarm to server : " + errorThrown.StackTrace + " " + errorThrown.ExceptionType); }
                 });
                 //  */
