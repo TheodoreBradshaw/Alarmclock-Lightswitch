@@ -8,7 +8,7 @@ var readline = require('readline');
 var alarms = [];
 
 //////*hostIP*//////
-var hostIP = "10.1.0.24";
+var hostIP = "192.168.1.77";
 
 loadAlarms();
 
@@ -28,7 +28,7 @@ http.createServer(function (req, res) {
                 res.write(JSON.stringify(alarms))
                 res.end();
             } else {
-                fs.readFile('./home.html', function (err, data) {
+                fs.readFile('/home/pi/HipLight/home.html', function (err, data) {
                     if (err) { throw err; }
                     htmlFile = data;
                     res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -71,11 +71,11 @@ http.createServer(function (req, res) {
 console.log('Server running at http://' + hostIP + ':80/');
 
 function loadAlarms() {
-    if (!fs.existsSync('alarmIndex.txt')) {
+    if (!fs.existsSync('/home/pi/HipLight/alarmIndex.txt')) {
         return;
     }
     var readerInterface = readline.createInterface({
-        input: fs.createReadStream('alarmIndex.txt')
+        input: fs.createReadStream('/home/pi/HipLight/alarmIndex.txt')
     });
     readerInterface.on('line', function (line) {
         console.log('Line from file:', line);
@@ -87,8 +87,8 @@ function loadAlarms() {
 function indexAlarm(alarm) {
     var string = JSON.stringify(alarm) + "\r\n";
     //var string = "hello world \r\n";
-    //fs.open('alarmIndex.txt', 'a', function (err, fd) {"
-    var fd = 'alarmIndex.txt'
+    //fs.open('/home/pi/HipLight/alarmIndex.txt', 'a', function (err, fd) {"
+    var fd = '/home/pi/HipLight/alarmIndex.txt'
     if (string.length > 3) {
         fs.appendFile(fd, string, function (err) {
             if (err)
@@ -122,7 +122,7 @@ function setNewAlarm(alarm) {
 function handleAlarm() {
     //execute alarm 
     console.log("Blink...Blink");
-    exec("sudo ./lightOn.out");
+    exec("sudo /home/pi/HipLight/lightOn.out");
 }
 
 function matchingAlarms(alarm1, alarm2) {
@@ -140,14 +140,14 @@ function deleteAlarm(alarm) {
             alarms.splice(i, 1);
 
             var readerInterface = readline.createInterface({
-                input: fs.createReadStream('alarmIndex.txt')
+                input: fs.createReadStream('/home/pi/HipLight/alarmIndex.txt')
             });
             readerInterface.on('line', function (line) {
                 console.log('Line from file:', line);
                 var stored = JSON.parse(line)
                 if (matchingAlarms(stored, alarm)) {
-                    //delete from alarmIndex.txt
-                    fs.unlink('alarmIndex.txt', function () { })
+                    //delete from /home/pi/HipLight/alarmIndex.txt
+                    fs.unlinkSync('/home/pi/HipLight/alarmIndex.txt')
 
                     for(var a= 0; a < alarms.length; a++){
                         indexAlarm(alarms[a]);

@@ -1,0 +1,96 @@
+Server running at http://192.168.1.77:80/
+Line from file: {"days":["2","4","6"],"hour":"06","minute":"35"}
+pushing alarm: {"days":["2","4","6"],"hour":"06","minute":"35","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+scheduled new alarm
+Line from file: {"days":["1","4","6"],"hour":"05","minute":"13"}
+pushing alarm: {"days":["1","4","6"],"hour":"05","minute":"13","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+scheduled new alarm
+Line from file: {"days":["2"],"hour":""}
+pushing alarm: {"days":["2"],"hour":"","alarmJob":null}
+scheduled new alarm
+Server running at http://192.168.1.77:80/
+{ days: [ '2', '3' ], hour: '' }
+pushing alarm: {"days":["2","3"],"hour":"","alarmJob":null}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["2","3"],"hour":""}
+
+{ days: [ '2', '3' ], hour: '' }
+Server running at http://192.168.1.77:80/
+Line from file: 
+Server running at http://192.168.1.77:80/
+{ days: [ '1', '2' ], hour: '06', minute: '30' }
+pushing alarm: {"days":["1","2"],"hour":"06","minute":"30","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["1","2"],"hour":"06","minute":"30"}
+
+{ days: [ '4' ], hour: '00', minute: '34' }
+pushing alarm: {"days":["4"],"hour":"00","minute":"34","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["4"],"hour":"00","minute":"34"}
+
+{ days: [ '4' ], hour: '00', minute: '34' }
+Alarm deleted{"days":["4"],"hour":"00","minute":"34"}
+POST recieved
+Line from file: {"days":["1","2"],"hour":"06","minute":"30"}
+Line from file: {"days":["4"],"hour":"00","minute":"34"}
+successfully appended new alarm to Alarm Index{"days":["1","2"],"hour":"06","minute":"30","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+
+Server running at http://192.168.1.77:80/
+Server running at http://192.168.1.77:80/
+{ days: [ '2', '5' ], hour: '18', minute: '30' }
+pushing alarm: {"days":["2","5"],"hour":"18","minute":"30","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["2","5"],"hour":"18","minute":"30"}
+
+{ days: [ '2', '5' ], hour: '01', minute: '05' }
+pushing alarm: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["2","5"],"hour":"01","minute":"05"}
+
+{ days: [ '2', '5' ], hour: '18', minute: '30' }
+Alarm deleted{"days":["2","5"],"hour":"18","minute":"30"}
+POST recieved
+Line from file: {"days":["2","5"],"hour":"18","minute":"30"}
+Line from file: {"days":["2","5"],"hour":"01","minute":"05"}
+successfully appended new alarm to Alarm Index{"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+
+Server running at http://192.168.1.77:80/
+Line from file: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+pushing alarm: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+scheduled new alarm
+{ days: [ '2' ], hour: '12', minute: '53' }
+pushing alarm: {"days":["2"],"hour":"12","minute":"53","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+scheduled new alarm
+POST recieved
+successfully appended new alarm to Alarm Index{"days":["2"],"hour":"12","minute":"53"}
+
+Blink...Blink
+Server running at http://192.168.1.77:80/
+Line from file: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+pushing alarm: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+scheduled new alarm
+Line from file: {"days":["2"],"hour":"12","minute":"53"}
+pushing alarm: {"days":["2"],"hour":"12","minute":"53","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+scheduled new alarm
+{ days: [ '2' ],
+  hour: '12',
+  minute: '53',
+  alarmJob: { callback: false, name: '<Anonymous Job 2>' } }
+Alarm deleted{"days":["2"],"hour":"12","minute":"53","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+POST recieved
+Line from file: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 2>"}}
+Line from file: {"days":["2"],"hour":"12","minute":"53"}
+successfully appended new alarm to Alarm Index{"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+
+{ days: [ '2', '5' ],
+  hour: '01',
+  minute: '05',
+  alarmJob: { callback: false, name: '<Anonymous Job 1>' } }
+Alarm deleted{"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
+POST recieved
+Line from file: {"days":["2","5"],"hour":"01","minute":"05","alarmJob":{"callback":false,"name":"<Anonymous Job 1>"}}
